@@ -1,5 +1,5 @@
 use std::fs;
-
+use std::collections::HashSet;
 
 fn main() {
     let target = 2020;
@@ -8,36 +8,25 @@ fn main() {
     let input = fs::read_to_string("input.txt")
     	.expect("Something went wrong reading the file");
 
-    // println!("With text:\n{}", input);
+    
+    let numbers: HashSet<i32> = input
+        .lines()
+        .map(|line| {
+            line.parse::<i32>().unwrap()
+        })
+        .collect();
 
-    let mut numbers = input
-    	.lines()
-    	.map( |line| {
-    		line.parse::<i32>().unwrap()
-    	})
-    	.collect::<Vec<i32>>();
-
-    //println!("{:?}", numbers);
-
-    numbers.sort_unstable();
-
-    for a in &numbers {
-        for b in &numbers {
-            if a+b == target {
-                println!("{} + {} = {}", a, b, a+b);
-                println!("{} * {} = {}", a, b, a*b);
-            }
-
-            for c in &numbers {
-                if a+b+c == target {
-                    println!("{} + {} + {} = {}", a, b, c, a+b+c);
-                    println!("{} * {} * {} = {}", a, b, c, a*b*c);
-                }
-            }
+    for n in &numbers {
+        let query = target-n;
+        if numbers.contains(&query) {
+            println!("{} + {} = {}", n, target-n, target);
+            println!("{} * {} = {}", n, target-n, n*(target-n));
+            break;
         }
     }
-    	
+
 }
+    	
 
 #[cfg(test)]
 mod tests {
