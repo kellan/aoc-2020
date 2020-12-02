@@ -16,6 +16,12 @@ fn main() {
         })
         .collect();
 
+    pair(numbers, target);
+//    triple(numbers, target);
+
+}
+    	
+fn pair(numbers: HashSet<i32>, target: i32) {
     for n in &numbers {
         let query = target-n;
         if numbers.contains(&query) {
@@ -24,9 +30,7 @@ fn main() {
             break;
         }
     }
-
 }
-    	
 
 #[cfg(test)]
 mod tests {
