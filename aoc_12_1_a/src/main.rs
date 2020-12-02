@@ -16,20 +16,25 @@ fn main() {
         })
         .collect();
 
-    pair(numbers, target);
+    match pair(numbers, target) {
+        Some((a,b)) => {
+            println!("{} * {} = {}", a, b, a*b);
+        }
+        None => println!("no match"),
+    }
 //    triple(numbers, target);
 
 }
     	
-fn pair(numbers: HashSet<i32>, target: i32) {
+fn pair(numbers: HashSet<i32>, target: i32) -> Option<(i32, i32)> {
     for n in &numbers {
         let query = target-n;
         if numbers.contains(&query) {
-            println!("{} + {} = {}", n, target-n, target);
-            println!("{} * {} = {}", n, target-n, n*(target-n));
-            break;
+            return Some((*n, target-n));
         }
     }
+
+    None
 }
 
 #[cfg(test)]
