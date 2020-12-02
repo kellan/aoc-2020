@@ -26,7 +26,13 @@ fn main() {
             if a+b == target {
                 println!("{} + {} = {}", a, b, a+b);
                 println!("{} * {} = {}", a, b, a*b);
-                break;
+            }
+
+            for c in &numbers {
+                if a+b+c == target {
+                    println!("{} + {} + {} = {}", a, b, c, a+b+c);
+                    println!("{} * {} * {} = {}", a, b, c, a*b*c);
+                }
             }
         }
     }
