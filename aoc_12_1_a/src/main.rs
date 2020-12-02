@@ -62,8 +62,14 @@ fn triple(numbers: &HashSet<i32>, target: i32) -> Option<(i32, i32, i32)> {
 mod tests {
 	use super::*;
 
-	// #[test]
-	// fn test_add() {
-	// 	assert_eq!(add(1,2), 3);
-	// }
+	#[test]
+	fn test_pair() {
+        let numbers: HashSet<i32> = vec![1721, 979, 366, 299, 675, 1456]
+            .into_iter().collect();
+        let result = pair(&numbers, 2020);
+        assert!(result.is_some());
+        let result = result.unwrap();
+
+        assert_eq!(result.0+result.1, 2020);
+    }
 }
