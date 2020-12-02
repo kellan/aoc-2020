@@ -2,20 +2,34 @@ use std::fs;
 
 
 fn main() {
-    println!("Hello, world!");
+    let target = 2020;
+
+    // println!("Hello, world!");
     let input = fs::read_to_string("input.txt")
     	.expect("Something went wrong reading the file");
 
     // println!("With text:\n{}", input);
 
-    let numbers = input
+    let mut numbers = input
     	.lines()
     	.map( |line| {
     		line.parse::<i32>().unwrap()
     	})
     	.collect::<Vec<i32>>();
 
-    println!("{:?}", numbers);
+    //println!("{:?}", numbers);
+
+    numbers.sort_unstable();
+
+    for a in &numbers {
+        for b in &numbers {
+            if a+b == target {
+                println!("{} + {} = {}", a, b, a+b);
+                println!("{} * {} = {}", a, b, a*b);
+                break;
+            }
+        }
+    }
     	
 }
 
