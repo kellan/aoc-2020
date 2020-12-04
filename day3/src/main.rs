@@ -31,19 +31,6 @@ fn main() {
     return count;	
  }
 
- // fn part2() -> usize {
- // 	let input = fs::read_to_string("input.txt")
- //    	.expect("Something went wrong reading the file");
-
- // 	let slopes = [(1,1), (3,1), (5,1), (7,1), (1,2)];
-    
- //    for slope in slopes.iter() {
- //    	let tree_count = toboggan(input, 1, 2);
- //    }
-
- //    return 0
- // }
-
 fn toboggan(input: &String, slope_right: usize, slope_down: usize) -> usize {
 
 	let mut right: usize = 0;
