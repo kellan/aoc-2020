@@ -7,10 +7,79 @@ fn main() {
     let input = fs::read_to_string("sample_input.txt")
     	.expect("Something went wrong reading the file");
 
-    let mut map_width = 0;
-    let mut map_height = 0;
+    let (map_width, map_height, map) = parse_map(input);
 
-    let mut map: HashSet<Point> = HashSet::new();
+    let mut current_down = 0;
+    let mut current_right = 0;
+    let mut found_trees = 0;
+
+    let slope_down = 1;
+    let slope_right = 3;
+
+    loop {
+    	current_right = current_right + slope_right;
+    	current_down = current_down + slope_down;
+
+    	println!("Step line {} col {}", current_down+1, current_right+1);
+
+    	if map.contains(&Point {down: current_down, right: current_right}) {
+    		println!("Found tree! {} {}", current_down+1, current_right+1);
+    		found_trees = found_trees + 1;
+    	}
+
+    	if current_right > map_width {
+	    	let wrapped_right = current_right % map_width;
+
+	    	println!("Wrapped step line {} col {}", current_down+1, wrapped_right+1);
+	    	if map.contains(&Point {down: current_down, right: wrapped_right}) {
+	    		println!("Found tree! {} {}", current_down+1, wrapped_right+1);
+    			found_trees = found_trees + 1;
+
+    		}
+
+	    }
+
+    	if current_down > map_height {
+    		break;
+    	}
+
+    }
+
+    println!("Found trees: {}", found_trees);
+
+  // //   let mut current_down = 1;
+  // //   let mut current_right = 1;
+
+  // //   let slope_down = 1;
+  // //   let slope_right = 3;
+
+  // //   let mut found_trees = 0;
+
+  // //   loop {
+		// // current_right = current_right + slope_right;
+		// // current_down = current_down + slope_down;
+
+		// // println!("Step {},{}", current_down, current_right);
+		// // println!("{} {} % {}", current_right, map_width, (current_right%map_width));
+
+		// // if map.contains(&Point {down: current_down, right: (current_right%map_width)}) {
+		// // 	println!("found tree! {}, {}", current_down, current_right);
+		// // 	found_trees = found_trees + 1;
+		// // }
+
+		
+		// // if current_down >= map_height {
+		// // 	break;
+		// // }
+  //   }
+
+    // println!("Found trees {}", found_trees);
+}
+
+fn parse_map(input: String) -> (usize, usize, HashSet<Point>) {
+	let mut map_height: usize = 0;
+	let mut map_width: usize = 0;
+	let mut map: HashSet<Point> = HashSet::new();
 
     for (down,line) in input.lines().enumerate() {
     	if down > map_height {
@@ -23,40 +92,20 @@ fn main() {
     		}
 
     		if c == '#' {
-    			println!("found tree: {},{} {}", down,right, c);
-    			map.insert(Point {x: right, y: down});
+    			// println!("Line: {}", line);
+    			// println!("Inserting down {} right {}", down, right);
+    			map.insert(Point {down, right});
     		}
     		
     	}
     }
 
-    let mut current_x = 0;
-    let mut current_y = 0;
-
-    let slope_x = 3;
-    let slope_y = 1;
-
-    let mut found_trees = 0;
-
-    loop {
-		current_x = (current_x + slope_x) % map_width;
-		current_y = current_y + slope_y;
-
-		if map.contains(&Point {x: current_x, y: current_y}) {
-			//println!("found tree! {}, {}", current_x, current_y);
-			found_trees = found_trees + 1;
-		}
-
-		if current_y >= map_height {
-			break;
-		}
-    }
-
-    println!("Found trees {}", found_trees);
+    return (map_height, map_width, map);
 }
+
 
 #[derive(PartialEq, Eq, Hash)]
 struct Point {
-    x: usize,
-    y: usize,
+    down: usize,
+    right: usize,
 }
