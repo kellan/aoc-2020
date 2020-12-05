@@ -9,14 +9,25 @@ fn main() {
 
     let mut largest_seat_id = 0;
 
+    let mut seat_ids: Vec<usize> = Vec::new();
+
     for line in input.lines() {
     	let seat_id = seat_id(line);
+    	seat_ids.push(seat_id);
+
     	if seat_id > largest_seat_id {
     		largest_seat_id = seat_id
     	}
     }
 
-    println!("largest {}", largest_seat_id);
+	seat_ids.sort();
+
+	for (pos, e) in seat_ids.iter().enumerate() {
+		if seat_ids[pos+1] - e > 1 {
+			println!("{}", e+1);
+			break;
+		}
+	}
     
 }
 
